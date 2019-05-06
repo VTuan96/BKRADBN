@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:icon="@drawable/ic_time_menu"
+        android:title="Add device"
+        android:id="@+id/mnuTime"
+        app:showAsAction="always"/>
+</menu>

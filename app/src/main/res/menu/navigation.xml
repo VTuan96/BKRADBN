@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mnuHome"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/mnuHistory"
+        android:icon="@drawable/ic_info_outline_black_24dp"
+        android:title="@string/title_history" />
+
+    <item
+        android:id="@+id/mnuManage"
+        android:icon="@drawable/ic_screen_lock_rotation_white_18dp"
+        android:title="Manage devices"
+        />
+
+    <item
+        android:id="@+id/mnuMore"
+        android:icon="@drawable/ic_more_horiz_white_18dp"
+        android:title="@string/title_more" />
+
+</menu>
