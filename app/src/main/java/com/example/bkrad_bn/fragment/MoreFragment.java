@@ -1,20 +1,29 @@
 package com.example.bkrad_bn.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.example.bkrad_bn.DetailDeviceActivity;
 import com.example.bkrad_bn.R;
+import com.example.bkrad_bn.UpdateUserActivity;
+import com.example.bkrad_bn.helper.InforUserDialog;
 
 
-public class MoreFragment extends Fragment {
+public class MoreFragment extends Fragment implements View.OnClickListener {
+
+    LinearLayout lnAccountInfor, lnUpdateUser, lnDefaultConnect, lnConnectConfig;
+
 
     public MoreFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,10 +32,50 @@ public class MoreFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_more, container, false);
+        View view = inflater.inflate(R.layout.fragment_more, container, false);
+
+        initWidgets(view);
+
+
+
+        return view;
     }
 
+    private void initWidgets(View view) {
+        lnAccountInfor = view.findViewById(R.id.lnAccountInfor);
+        lnUpdateUser = view.findViewById(R.id.lnUpdateUser);
+        lnConnectConfig = view.findViewById(R.id.lnConnectConfig);
+        lnDefaultConnect = view.findViewById(R.id.lnDefaultConnect);
+
+        lnAccountInfor.setOnClickListener(this);
+        lnUpdateUser.setOnClickListener(this);
+        lnConnectConfig.setOnClickListener(this);
+        lnDefaultConnect.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        Intent intent = null;
+        switch (id){
+            case R.id.lnAccountInfor:
+                InforUserDialog inforUserDialog = new InforUserDialog(getContext());
+                inforUserDialog.show();
+                break;
+            case R.id.lnUpdateUser:
+                intent = new Intent(getContext(), DetailDeviceActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.lnDefaultConnect:
+                intent = new Intent(getContext(), DetailDeviceActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.lnConnectConfig:
+                intent = new Intent(getContext(), DetailDeviceActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
 }
