@@ -43,7 +43,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:id="@+id/lnAccountInfor">
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
@@ -68,7 +69,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:id="@+id/lnUpdateUser">
                         <ImageView
                             android:layout_width="36dp"
                             android:layout_height="36dp"
@@ -89,25 +91,6 @@
                         android:layout_height="0.5dp"
                         android:background="@color/colorDivider"/>
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_person_pin_circle_white_36dp"
-                            android:scaleType="fitCenter"
-                            android:tint="@color/colorGrey"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/account_information"
-                            android:textSize="13sp"
-                            android:padding="@dimen/size15dp"/>
-                    </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -137,6 +120,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/lnConnectConfig"
                         android:orientation="horizontal"
                         android:layout_weight="0.65">
                         <ImageView
@@ -163,6 +147,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/lnDefaultConnect"
                         android:orientation="horizontal"
                         android:layout_weight="0.65">
                         <ImageView
@@ -202,7 +187,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/colorSecond"
-                        android:text="@string/language_setting"
+                        android:text="@string/graph_setting"
                         android:padding="15dp"
                         android:textSize="15sp"
                         android:textColor="@color/colorTextPrimary"/>
@@ -215,23 +200,22 @@
                         <RadioGroup
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:checkedButton="@id/rbVietnamese"
+                            android:orientation="vertical"
+                            android:checkedButton="@id/rbLineGraph"
                             android:weightSum="2">
                             <RadioButton
-                                android:id="@+id/rbVietnamese"
+                                android:id="@+id/rbLineGraph"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:padding="10dp"
-                                android:text="@string/vietnamese_language"/>
+                                android:text="@string/graph_line"/>
                             <RadioButton
-                                android:id="@+id/rbEnglish"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:padding="10dp"
-                                android:text="@string/english_language"/>
+                                android:text="@string/graph_barchart"/>
                         </RadioGroup>
 
                     </LinearLayout>

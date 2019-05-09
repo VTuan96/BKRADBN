@@ -5,7 +5,8 @@
     android:layout_height = "wrap_content"
     android:layout_marginBottom="10dp"
     android:orientation="vertical"
-    app:cardCornerRadius = "5dp">
+    app:cardCornerRadius = "5dp"
+    android:id="@+id/cvItemDev">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,67 +27,70 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
-                android:text="BKRAD-01"
-                android:textSize="15sp"
-                android:id="@+id/txtItemTitleDevice"/>
+                android:text="..."
+                android:textSize="18sp"
+                android:id="@+id/txtNameDev"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtImeiDev"
                 android:layout_marginTop="2dp"
                 android:textColor="@color/colorBlack"
-                android:text="BKRAD-01"
-                android:textSize="10sp"
+                android:text="Imei: ..."
+                android:textSize="15sp"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtLatitudeDev"
                 android:textColor="@color/colorBlack"
-                android:text="Trạng thái: Đã kích hoạt"
-                android:textSize="10sp"
+                android:text="Latitude: ..."
+                android:textSize="15sp"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/txtLongitudeDev"
                 android:textColor="@color/colorBlack"
-                android:text="Hoạt động: tốt"
-                android:textSize="10sp"
+                android:text="Longitude: ..."
+                android:textSize="15sp"
                 />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorSecondPrimary"
-                    android:drawableStart="@drawable/ic_person_outline_white_18dp"
-                    android:text="Kích hoạt"
-                    android:textColor="@color/colorWhite"
-                    android:textAllCaps="false"
-                    />
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:orientation="horizontal">-->
+                <!--<Button-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@color/colorSecondPrimary"-->
+                    <!--android:drawableStart="@drawable/ic_person_outline_white_18dp"-->
+                    <!--android:text="Kích hoạt"-->
+                    <!--android:textColor="@color/colorWhite"-->
+                    <!--android:textAllCaps="false"-->
+                    <!--/>-->
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/size15dp"
-                    android:background="@color/colorSecondPrimary"
-                    android:text="Kích hoạt"
-                    android:drawableStart="@drawable/ic_person_outline_white_18dp"
-                    android:textColor="@color/colorWhite"
-                    android:textAllCaps="false"
-                    />
+                <!--<Button-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginLeft="@dimen/size15dp"-->
+                    <!--android:background="@color/colorSecondPrimary"-->
+                    <!--android:text="Kích hoạt"-->
+                    <!--android:drawableStart="@drawable/ic_person_outline_white_18dp"-->
+                    <!--android:textColor="@color/colorWhite"-->
+                    <!--android:textAllCaps="false"-->
+                    <!--/>-->
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginLeft="@dimen/size15dp"
-                    android:background="@color/colorSecondPrimary"
-                    android:text="Kích hoạt"
-                    android:drawableStart="@drawable/ic_person_outline_white_18dp"
-                    android:textColor="@color/colorWhite"
-                    android:textAllCaps="false"
-                    />
-            </LinearLayout>
+                <!--<Button-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="36dp"-->
+                    <!--android:layout_marginLeft="@dimen/size15dp"-->
+                    <!--android:background="@color/colorSecondPrimary"-->
+                    <!--android:text="Kích hoạt"-->
+                    <!--android:drawableStart="@drawable/ic_person_outline_white_18dp"-->
+                    <!--android:textColor="@color/colorWhite"-->
+                    <!--android:textAllCaps="false"-->
+                    <!--/>-->
+            <!--</LinearLayout>-->
 
         </LinearLayout>
     </LinearLayout>

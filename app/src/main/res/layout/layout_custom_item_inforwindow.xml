@@ -40,7 +40,7 @@
                     android:scaleType="fitCenter"
                     android:scaleX="0.6"
                     android:scaleY="0.4"
-                    android:src="@drawable/ic_alpha"
+                    android:src="@drawable/ic_temp_18dp"
                     android:tint="@color/colorPrimary"
                     android:layout_weight="1"/>
 
@@ -74,7 +74,7 @@
                 android:layout_height="match_parent"
                 android:scaleX="0.6"
                 android:scaleY="0.4"
-                android:src="@drawable/ic_beta"
+                android:src="@drawable/ic_humi_18dp"
                 android:tint="@color/colorPrimary"
                 android:layout_weight="1"/>
 

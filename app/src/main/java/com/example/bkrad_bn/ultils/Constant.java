@@ -34,4 +34,6 @@ public class Constant {
     public static final String LIST_LAKE = "LIST_LAKE";
     public static final String LIST_DEVICE = "LIST_DEVICE";
 
+    public static final String DETAIL_DEV = "DETAIL_DEV";
+
 }

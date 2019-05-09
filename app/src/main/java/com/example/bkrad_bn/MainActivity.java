@@ -3,6 +3,7 @@ package com.example.bkrad_bn;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     private int year, month, day;
 
     public static DateChanged dateChangedListener;
+
+    public static MediaPlayer mediaPlayer = null;
+    public static boolean isWarningSound = true;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -101,12 +105,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
         if ( month < 9 ){
-            if (day<9){
+            if (day<10){
                 selectedDateTime = "0" + day + "/" + "0"+ (month+1) +"/" + year;
             } else
                 selectedDateTime = day + "/" + "0"+ (month+1) +"/" + year;
         } else{
-            if (day<9){
+            if (day<10){
                 selectedDateTime = "0" + day + "/" +  (month+1) +"/" + year;
             } else
                 selectedDateTime = day + "/" + (month+1) +"/" + year;
@@ -171,14 +175,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     if ( arg2 < 9 ){
                         tmpNgayThangNam =  "0"+ (arg2+1) +"/" + arg3 +"/" + arg1;
 
-                        if (arg3<9){
+                        if (arg3<10){
                             selectedDateTime = "0" + arg3 + "/" + "0"+ (arg2+1) +"/" + arg1;
                         } else
                             selectedDateTime = arg3 + "/" + "0"+ (arg2+1) +"/" + arg1;
                     } else{
                         tmpNgayThangNam =  (arg2+1)+ "/" + arg3 +"/" +  arg1;
 
-                        if (arg3<9){
+                        if (arg3<10){
                             selectedDateTime = "0" + arg3 + "/" +  (arg2+1) +"/" + arg1;
                         } else
                             selectedDateTime = arg3 + "/" +  (arg2+1) +"/" + arg1;

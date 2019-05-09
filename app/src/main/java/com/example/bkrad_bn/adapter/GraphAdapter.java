@@ -53,14 +53,14 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
             //set du lieu cho bieu do
             ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
 
-            LineDataSet dataset = new LineDataSet(graph.getEntriesAlpha(), "Alpha");
+            LineDataSet dataset = new LineDataSet(graph.getEntriesAlpha(), "Nhiệt độ");
             dataset.setColors(Color.WHITE);
             dataset.setValueTextColor(context.getResources().getColor(R.color.colorWhite));
             dataset.setCircleColor(Color.WHITE);
             dataset.setDrawFilled(false);
             lineDataSets.add(dataset);
 
-            LineDataSet dataset1 = new LineDataSet(graph.getEntriesBeta(), "Beta");
+            LineDataSet dataset1 = new LineDataSet(graph.getEntriesBeta(), "Độ ẩm");
             dataset1.setColors(Color.BLACK);
             dataset1.setValueTextColor(context.getResources().getColor(R.color.colorWhite));
             dataset1.setCircleColor(Color.BLACK);
@@ -89,6 +89,10 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
             rightYAxis.setTextColor(Color.WHITE);
 
             holder.graph.setData(new LineData(lineDataSets));
+            holder.graph.setDrawGridBackground(false);
+            holder.graph.getAxisRight().setDrawGridLines(false);
+            holder.graph.getAxisLeft().setDrawGridLines(false);
+            holder.graph.getXAxis().setDrawGridLines(false);
             holder.graph.animateY(3000);
             holder.graph.invalidate();
             holder.graph.setBackgroundColor(context.getResources().getColor(R.color.colorSecondPrimary));

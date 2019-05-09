@@ -14,6 +14,7 @@ import com.example.bkrad_bn.adapter.ManageDeviceAdapter;
 import com.example.bkrad_bn.model.Device;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +25,8 @@ public class ManageDeviceFragment extends Fragment {
     ListView lvManageDevice;
     ArrayList<Device> listDevice;
     ManageDeviceAdapter manageDeviceAdapter;
+
+    Random random = new Random();
 
     public ManageDeviceFragment() {
         // Required empty public constructor
@@ -56,10 +59,10 @@ public class ManageDeviceFragment extends Fragment {
     private ArrayList<Device> getListDevices() {
         ArrayList<Device> list = new ArrayList<>();
 
-        Device dev0 = new Device(1, "BBKRAD-01", "00-00-00-01", 10.2f, 10.3f, 21.122567f, 106.006095f);
-        Device dev1 = new Device(2, "BBKRAD-02", "00-00-00-02", 10.2f, 10.3f, 21.004314f, 105.8419583f);
-        Device dev2 = new Device(3, "BBKRAD-03", "00-00-00-03", 10.2f, 10.3f, 20.997144f, 105.8569703f);
-        Device dev3 = new Device(4, "BBKRAD-04", "00-00-00-04", 10.2f, 10.3f, 20.98896f, 105.8388993f);
+        Device dev0 = new Device(1, "SANSLAB01", "00000001", random.nextInt(5) + 25.5f, random.nextInt(5) + 75.5f, 21.122567f, 106.006095f);
+        Device dev1 = new Device(2, "SANSLAB02", "00000002", random.nextInt(5) + 25.5f, random.nextInt(5) + 75.5f,  21.004314f, 105.8419583f);
+        Device dev2 = new Device(3, "SANSLAB03", "00000003", random.nextInt(5) + 25.5f, random.nextInt(5) + 75.5f,  20.997144f, 105.8569703f);
+        Device dev3 = new Device(4, "SANSLAB04", "00000004", random.nextInt(5) + 25.5f, random.nextInt(5) + 75.5f,  20.98896f, 105.8388993f);
 
         list.add(dev0);
         list.add(dev1);

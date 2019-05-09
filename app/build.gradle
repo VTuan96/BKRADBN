@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.google.android.gms:play-services:12.0.1'
     implementation 'com.google.android.gms:play-services-maps:12.0.1'
+    implementation 'com.nabinbhandari.android:permissions:3.8'
 }

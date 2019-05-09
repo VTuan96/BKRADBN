@@ -31,4 +31,12 @@
     <string name="server_setting">Cấu hình cổng kết nối</string>
     <string name="title_more">More</string>
     <string name="title_activity_maps">Map</string>
+    <string name="account_infor">Thông tin tài khoản</string>
+    <string name="user_name">Username (Số điện thoại)</string>
+    <string name="email">Email</string>
+    <string name="fullName">Full name</string>
+    <string name="enterprise">Enterprise</string>
+    <string name="graph_setting">Cấu hình biểu đồ</string>
+    <string name="graph_line">Biểu đồ đường</string>
+    <string name="graph_barchart">Biểu đồ cột</string>
 </resources>

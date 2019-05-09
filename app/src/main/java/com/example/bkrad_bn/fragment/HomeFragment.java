@@ -19,11 +19,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.bkrad_bn.MainActivity;
@@ -48,6 +50,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -59,7 +63,7 @@ import java.util.TimerTask;
  */
 public class HomeFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
+        LocationListener, ActivityCompat.OnRequestPermissionsResultCallback, View.OnClickListener {
 
     ArrayList<Device> listDevices;
     SupportMapFragment mapFragment;
@@ -71,8 +75,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
     Context mContext;
 
-    float MAX_ALPHA_THRESHOLD = 0.5f;
-    float MAX_BETA_THRESHOLD = 0.5f;
+    float MAX_ALPHA_THRESHOLD = 29f;
+    float MAX_BETA_THRESHOLD = 79f;
 
     static Random random = null;
 
@@ -84,6 +88,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
     SharedPreferences preferences = null;
     MediaPlayer mediaPlayer = null;
+
+    CardView cvSound;
+    ImageView ivWarningSound;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -97,6 +104,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setHasOptionsMenu(true);
 
+        MainActivity.isWarningSound = true;
         initWidgets(view);
 
         mContext = (MainActivity) getContext();
@@ -105,22 +113,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         editor.putBoolean(Constants.FIRST_TIME_USE_APP, IS_FIRST_TIME_USE_APP);
         editor.commit();
 
-//        listDevices = getListDevices();
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!checkPermissions())
-                requestLocationPermission();
-        }
-
-
-//        alpha = random.nextFloat();
-//        beta = random.nextFloat();
-
         return view;
     }
 
     private void updateDeviesMap(ArrayList<Device> listDevices) {
-        CustomInforWindowAdapter inforWindowAdapter = new CustomInforWindowAdapter(getContext());
+        CustomInforWindowAdapter inforWindowAdapter = new CustomInforWindowAdapter(mContext);
         map.setInfoWindowAdapter(inforWindowAdapter);
 
         LatLng latLng0 = null;
@@ -135,27 +132,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
             marker.setTag(dev);
 //            marker.showInfoWindow();
 
-            if (outOfRangeValue(dev.getAlpha(), dev.getBeta()) && !FIRST_WARNING){
+            if (outOfRangeValue(dev.getAlpha(), dev.getBeta()) && !FIRST_WARNING && MainActivity.isWarningSound){
                 FIRST_WARNING = true;
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mediaPlayer = MediaPlayer.create(mContext, R.raw.warning_sound);
-                        mediaPlayer.start(); // no need to call prepare(); create() does that for you
-                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                            public void onCompletion(MediaPlayer mp) {
-                                mp.release();
-                            };
-                        });
-                    }
+                MainActivity.mediaPlayer = MediaPlayer.create(mContext, R.raw.warning_sound);
+                MainActivity.mediaPlayer.start(); // no need to call prepare(); create() does that for you
+                MainActivity.mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();
+                    };
                 });
-                thread.run();
-
-
             }
 
             if (listDevices.get(i).equals(favoriteDev) && favoriteDev != null) {
                 latLng0 = new LatLng(favoriteDev.getLat(), favoriteDev.getLon());
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng0, 10));
                 marker.showInfoWindow();
             }
 
@@ -175,6 +165,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
     private void initWidgets(View view) {
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        cvSound = view.findViewById(R.id.cvSound);
+        ivWarningSound = view.findViewById(R.id.ivWarningSound);
+
+        cvSound.setOnClickListener(this);
+        ivWarningSound.setImageDrawable(MainActivity.isWarningSound ? getResources().getDrawable(R.drawable.ic_volume_on) :
+                getResources().getDrawable(R.drawable.ic_volume_off) );
     }
 
 
@@ -193,21 +190,21 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
     private ArrayList<Device> getListDevices() {
         ArrayList<Device> list = new ArrayList<>();
 
-        Device dev0 = new Device(1, "BBKRAD-01", "00-00-00-01", random.nextFloat(), random.nextFloat(), 21.122567f, 106.006095f);
-        Device dev1 = new Device(2, "BBKRAD-02", "00-00-00-02", random.nextFloat(), random.nextFloat(),  21.004314f, 105.8419583f);
-        Device dev2 = new Device(3, "BBKRAD-03", "00-00-00-03", random.nextFloat(), random.nextFloat(),  20.997144f, 105.8569703f);
-        Device dev3 = new Device(4, "BBKRAD-04", "00-00-00-04", random.nextFloat(), random.nextFloat(),  20.98896f, 105.8388993f);
+        Device dev0 = new Device(1, "SANSLAB01", "00000001", random.nextInt(5) + 25.5f, random.nextInt(5) + 75.5f, 21.122567f, 106.006095f);
+        Device dev1 = new Device(2, "SANSLAB02", "00000002", random.nextInt(5) + 25.5f, random.nextInt(5) + 75.5f,  21.004314f, 105.8419583f);
+        Device dev2 = new Device(3, "SANSLAB03", "00000003", random.nextInt(5) + 25.5f, random.nextInt(5) + 75.5f,  20.997144f, 105.8569703f);
+        Device dev3 = new Device(4, "SANSLAB04", "00000004", random.nextInt(5) + 25.5f, random.nextInt(5) + 75.5f,  20.98896f, 105.8388993f);
 
         list.add(dev0);
         list.add(dev1);
         list.add(dev2);
         list.add(dev3);
 
-        preferences = getContext().getSharedPreferences(Constants.FIRST_TIME_USE_APP,Context.MODE_PRIVATE);
+        preferences = mContext.getSharedPreferences(Constants.FIRST_TIME_USE_APP, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         IS_FIRST_TIME_USE_APP = preferences.getBoolean(Constants.FIRST_TIME_USE_APP, true);
 
-        if (list.size() > 0 && IS_FIRST_TIME_USE_APP) {
+        if (list.size() > 0 && IS_FIRST_TIME_USE_APP){
             favoriteDev = list.get(0);
 
             IS_FIRST_TIME_USE_APP = !IS_FIRST_TIME_USE_APP;
@@ -266,14 +263,47 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (!checkPermissions())
+//                requestLocationPermission();
+
+            String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+            Permissions.check(mContext, permissions, null, null, new PermissionHandler() {
+                @Override
+                public void onGranted() {
+                    // do your task.
+                    if (ContextCompat.checkSelfPermission((MainActivity)mContext,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        if (mGoogleApiClient == null) {
+                            buildGoogoleApiClient();
+                        }
+//                        map.setMyLocationEnabled(true);
+                        onResume();
+                    }
+                }
+
+                @Override
+                public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                    Toast.makeText(mContext, "Denied", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
         map = googleMap;
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission((MainActivity)mContext,
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
-                buildGoogoleApiClient();
-                map.setMyLocationEnabled(true);
+//                buildGoogoleApiClient();
+//                map.setMyLocationEnabled(true);
+
+                if (mGoogleApiClient == null) {
+                    buildGoogoleApiClient();
+                }
+//                        map.setMyLocationEnabled(true);
+                onResume();
 
             }
         } else {
@@ -323,7 +353,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
     @Override
     public void onLocationChanged(Location location) {
         clearMap();
-//        setUpMap();
+
+        releaseMediaPlayer(MainActivity.mediaPlayer);
+
 
         random = new Random();
         listDevices = getListDevices();
@@ -342,26 +374,26 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         return permissionState == PackageManager.PERMISSION_GRANTED;
     }
 
-    public void requestLocationPermission() {
+//    public void requestLocationPermission() {
+//
+//        // Asking user if explanation is needed
+//        boolean isShowRationale = ActivityCompat.shouldShowRequestPermissionRationale((MainActivity)mContext,
+//                Manifest.permission.ACCESS_FINE_LOCATION);
+//        if (isShowRationale) {
+////                onRestart();
+//
+//        } else {
+//            // No explanation needed, we can request the permission.
+//            ActivityCompat.requestPermissions(getActivity(),
+//                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                    MY_PERMISSIONS_REQUEST_LOCATION);
+//        }
+//
+//    }
 
-        // Asking user if explanation is needed
-        boolean isShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        if (isShowRationale) {
-//                onRestart();
-
-        } else {
-            // No explanation needed, we can request the permission.
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_LOCATION);
-        }
-
-    }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
@@ -374,12 +406,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
 
-//                        onResume();
-
                         if (mGoogleApiClient == null) {
                             buildGoogoleApiClient();
                         }
                         map.setMyLocationEnabled(true);
+                        onResume();
                     }
                 } else {
                     Toast.makeText(getActivity(), "Permission denied", Toast.LENGTH_LONG).show();
@@ -415,10 +446,46 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                     return;
                 }
                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
+                clearMap();
+                random = new Random();
+                listDevices = getListDevices();
+                updateDeviesMap(listDevices);
             }
         }
 
 
+    }
+
+    @Override
+    public void onPause() {
+        releaseMediaPlayer(MainActivity.mediaPlayer);
+        super.onPause();
+    }
+
+    private void releaseMediaPlayer(MediaPlayer mp){
+        try {
+//            mp.reset();
+//            mp.prepare();
+//            mp.stop();
+            if (mp != null)
+                mp.release();
+            mp = null;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.cvSound){
+            MainActivity.isWarningSound = !MainActivity.isWarningSound;
+
+            ivWarningSound.setImageDrawable(MainActivity.isWarningSound ? getResources().getDrawable(R.drawable.ic_volume_on) :
+                    getResources().getDrawable(R.drawable.ic_volume_off) );
+        }
     }
 }
 
