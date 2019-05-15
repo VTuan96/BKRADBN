@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
@@ -30,6 +32,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.auth0.android.jwt.Claim;
+import com.auth0.android.jwt.JWT;
 import com.example.bkrad_bn.model.Customer;
 import com.example.bkrad_bn.ultils.CheckInternet;
 import com.example.bkrad_bn.ultils.Constant;
@@ -37,6 +41,7 @@ import com.example.bkrad_bn.ultils.Constant;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -152,32 +157,132 @@ public class LoginActivity extends AppCompatActivity {
 
                     Uri builder = Uri.parse(Constant.URL + Constant.API_GET_TOKEN)
                             .buildUpon()
-                            .appendQueryParameter("Username", tmpID)
-                            .appendQueryParameter("Pass", tmpPass).build();
+                            .build();
                     String url = builder.toString();
 
                     Log.i(Constant.TAG_LOGIN, url);
 
-                    //requestWithSomeHttpHeaders(url);
-//                    setHeaderLogin(tmpID, tmpPass);
-
-                    Customer customer = new Customer("01","hieungoc", "ngochieu",
-                            "0163454321", "ngochieu96","Nguyen Ngoc Hieu", 1);
-                    if (tmpID.equals("1") && tmpPass.equals("1")){
-                        //Chuyen Activity
-                        Intent t = new Intent(LoginActivity.this, MainActivity.class);
-                        t.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        t.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        t.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        t.putExtra("customerObject", customer);
-
-                        startActivity(t);
-                    }
+                    setHeaderLogin(tmpID, tmpPass);
 
                 }
             }
         });
     }
+
+
+    public void setHeaderLogin(final String tmpID, final String tmpPass){
+        String url = Constant.URL + Constant.API_GET_TOKEN;
+
+        pDialog.setMessage("Đang tải...");
+//        pDialog.show();
+        String requestBody = null;
+
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("PhoneNumber", tmpID);
+            jsonBody.put("Password", tmpPass);
+            requestBody = jsonBody.toString();
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        final String finalRequestBody = requestBody;
+        final StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(final String response) {
+
+                try {
+                    JSONObject root = new JSONObject(response);
+                    String token = root.getString("token");
+
+                    final SharedPreferences preferences = getSharedPreferences(Constant.ACCESS_CODE,MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString(Constant.ACCESS_TOKEN,token);
+                    editor.commit();
+
+                    try {
+                        JWT jwt = new JWT(token);
+                        Map<String, Claim> claims = jwt.getClaims();
+
+                        Customer customer = new Customer();
+                        customer.setEmail(claims.get("email").asString());
+                        customer.setUniqueName(claims.get("unique_name").asString());
+                        customer.setEnterpriseId(Integer.parseInt(claims.get("EnterpriseId").asString()));
+                        customer.setFullName(claims.get("fullName").asString());
+
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("customer", customer);
+                        startActivity(intent);
+
+                    } catch (Exception exception){
+                        //Invalid token
+                        Log.d("Exception", exception.toString());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+                pDialog.hide();
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                builder1.setMessage("Lỗi khi đăng nhập. Vui Lòng Thử lại");
+                builder1.setTitle("Lỗi mạng");
+                builder1.setPositiveButton(
+                        "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
+        }){
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return finalRequestBody.getBytes("utf-8") ;
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                int statusCode = response.statusCode;
+
+                if (statusCode==400) //unauthorized
+                {
+                    onRestart();
+                }
+                return super.parseNetworkResponse(response);
+            }
+        };
+
+        queue.add(request);
+
+    }
+
 
     //Ham luu thong tin dang nhap
     public void savingPreferences(){

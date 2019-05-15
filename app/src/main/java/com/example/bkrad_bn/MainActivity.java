@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     MenuItem menuItem = null;
     public static String tmpNgayThangNam = "";
     public static String selectedDateTime = "";
+    public static String formatDateTime = "";
     public static int selectedDeviceId = 0;
     public static String selectedDevice = "";
     private Calendar calendar;
@@ -62,13 +63,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     transaction.replace(R.id.contain, fragment);
                     transaction.commit();
                     return true;
-//                case R.id.mnuSetting:
-//                    fragment = new ManageDeviceFragment();
-//                    fragment.onAttach(MainActivity.this);
-//                    transaction.replace(R.id.contain, fragment);
-//                    transaction.commit();
-//                    setTitle("Cấu hình cảnh báo");
-//                    return true;
                 case R.id.mnuMore:
                     fragment = new MoreFragment();
                     fragment.onAttach(getApplicationContext());
@@ -106,14 +100,20 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         if ( month < 9 ){
             if (day<10){
-                selectedDateTime = "0" + day + "/" + "0"+ (month+1) +"/" + year;
-            } else
-                selectedDateTime = day + "/" + "0"+ (month+1) +"/" + year;
+                selectedDateTime = "0" + day + "-" + "0"+ (month+1) +"-" + year;
+                formatDateTime = "0"+ (month+1) + "0" + day + "-" +"-" + year;
+            } else {
+                selectedDateTime = day + "-" + "0" + (month + 1) + "-" + year;
+                formatDateTime = "0" + (month + 1) + "-" + day + "-" + year;
+            }
         } else{
             if (day<10){
-                selectedDateTime = "0" + day + "/" +  (month+1) +"/" + year;
-            } else
-                selectedDateTime = day + "/" + (month+1) +"/" + year;
+                selectedDateTime = "0" + day + "-" +  (month+1) +"-" + year;
+                formatDateTime = (month + 1) + "-" + "0" + day + "-" + year;
+            } else {
+                selectedDateTime = day + "-" + (month + 1) + "-" + year;
+                formatDateTime = (month + 1) + "-" + day + "-" + year;
+            }
         }
 
     }
@@ -173,19 +173,25 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     year = arg1; month = arg2; day = arg3;
 
                     if ( arg2 < 9 ){
-                        tmpNgayThangNam =  "0"+ (arg2+1) +"/" + arg3 +"/" + arg1;
+                        tmpNgayThangNam =  "0"+ (arg2+1) +"-" + arg3 +"-" + arg1;
 
                         if (arg3<10){
-                            selectedDateTime = "0" + arg3 + "/" + "0"+ (arg2+1) +"/" + arg1;
-                        } else
-                            selectedDateTime = arg3 + "/" + "0"+ (arg2+1) +"/" + arg1;
+                            selectedDateTime = "0" + arg3 + "-" + "0"+ (arg2+1) +"-" + arg1;
+                            formatDateTime = "0"+ (arg2+1) + "0" + arg3 + "-" +"-" + arg1;
+                        } else {
+                            selectedDateTime = arg3 + "-" + "0" + (arg2 + 1) + "-" + arg1;
+                            formatDateTime = "0" + (arg2 + 1) + "-" + arg3 + "-" + arg1;
+                        }
                     } else{
-                        tmpNgayThangNam =  (arg2+1)+ "/" + arg3 +"/" +  arg1;
+                        tmpNgayThangNam =  (arg2+1)+ "-" + arg3 +"-" +  arg1;
 
                         if (arg3<10){
-                            selectedDateTime = "0" + arg3 + "/" +  (arg2+1) +"/" + arg1;
-                        } else
-                            selectedDateTime = arg3 + "/" +  (arg2+1) +"/" + arg1;
+                            selectedDateTime = "0" + arg3 + "-" +  (arg2+1) +"-" + arg1;
+                            formatDateTime = (arg2 + 1) + "-" + "0" + arg3 + "-" + arg1;
+                        } else {
+                            selectedDateTime = arg3 + "-" + (arg2 + 1) + "-" + arg1;
+                            formatDateTime = (arg2 + 1) + "-" + arg3 + "-" + arg1;
+                        }
                     }
 
                     dateChangedListener.onDateChanged(selectedDateTime);

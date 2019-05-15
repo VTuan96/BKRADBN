@@ -4,77 +4,50 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Customer implements Serializable {
-    public String Id;
-    public String Username;
-    public String Email;
-    public String PhoneNumber;
-    public String Password;
-    public String FullName;
-    public int HoDanId;
+    String uniqueName;
+    String email;
+    String fullName;
+    int enterpriseId;
 
-    public Customer(String id, String username, String email, String phoneNumber, String password, String fullName, int hoDanId) {
-        Id = id;
-        Username = username;
-        Email = email;
-        PhoneNumber = phoneNumber;
-        Password = password;
-        FullName = fullName;
-        HoDanId = hoDanId;
+    public Customer() {
     }
 
-    public String getId() {
-        return Id;
+    public Customer(String uniqueName, String email, String fullName, int enterpriseId) {
+        this.uniqueName = uniqueName;
+        this.email = email;
+        this.fullName = fullName;
+        this.enterpriseId = enterpriseId;
     }
 
-    public void setId(String id) {
-        Id = id;
+    public String getUniqueName() {
+        return uniqueName;
     }
 
-    public String getUsername() {
-        return Username;
-    }
-
-    public void setUsername(String username) {
-        Username = username;
+    public void setUniqueName(String uniqueName) {
+        this.uniqueName = uniqueName;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
-    }
-
-    public String getPhoneNumber() {
-        return PhoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
+        this.email = email;
     }
 
     public String getFullName() {
-        return FullName;
+        return fullName;
     }
 
     public void setFullName(String fullName) {
-        FullName = fullName;
+        this.fullName = fullName;
     }
 
-    public int getHoDanId() {
-        return HoDanId;
+    public int getEnterpriseId() {
+        return enterpriseId;
     }
 
-    public void setHoDanId(int hoDanId) {
-        HoDanId = hoDanId;
+    public void setEnterpriseId(int enterpriseId) {
+        this.enterpriseId = enterpriseId;
     }
 }

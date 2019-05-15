@@ -45,27 +45,27 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Graph graph=listGraph.get(position);
 
-        if (graph!=null && graph.getEntriesBeta().size() > 0 && graph.getEntriesAlpha().size() > 0){
+        if (graph!=null && graph.getEntriesAlpha().size() > 0){
             //set ten bieu do
-            String nameGraph=graph.getName_graph();
+            String nameGraph = "Biểu đồ lịch sử tham số " + graph.getName_graph();
             holder.txtTenBieuDo.setText(nameGraph);
 
             //set du lieu cho bieu do
             ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
 
-            LineDataSet dataset = new LineDataSet(graph.getEntriesAlpha(), "Nhiệt độ");
+            LineDataSet dataset = new LineDataSet(graph.getEntriesAlpha(), graph.getName_graph());
             dataset.setColors(Color.WHITE);
             dataset.setValueTextColor(context.getResources().getColor(R.color.colorWhite));
             dataset.setCircleColor(Color.WHITE);
             dataset.setDrawFilled(false);
             lineDataSets.add(dataset);
 
-            LineDataSet dataset1 = new LineDataSet(graph.getEntriesBeta(), "Độ ẩm");
-            dataset1.setColors(Color.BLACK);
-            dataset1.setValueTextColor(context.getResources().getColor(R.color.colorWhite));
-            dataset1.setCircleColor(Color.BLACK);
-            dataset1.setDrawFilled(false);
-            lineDataSets.add(dataset1);
+//            LineDataSet dataset1 = new LineDataSet(graph.getEntriesBeta(), "Độ ẩm");
+//            dataset1.setColors(Color.BLACK);
+//            dataset1.setValueTextColor(context.getResources().getColor(R.color.colorWhite));
+//            dataset1.setCircleColor(Color.BLACK);
+//            dataset1.setDrawFilled(false);
+//            lineDataSets.add(dataset1);
 
             IAxisValueFormatter formatter = new IAxisValueFormatter() {
 

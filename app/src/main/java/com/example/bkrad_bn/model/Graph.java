@@ -14,20 +14,17 @@ import java.util.ArrayList;
 public class Graph implements Parcelable {
     private String name_graph;
     private ArrayList<Entry> entriesAlpha;
-    private ArrayList<Entry> entriesBeta;
     private ArrayList<String> labels;
 
-    public Graph(String name_graph, ArrayList<Entry> entriesAlpha, ArrayList<Entry> entriesBeta, ArrayList<String> labels) {
+    public Graph(String name_graph, ArrayList<Entry> entriesAlpha, ArrayList<String> labels) {
         this.name_graph = name_graph;
         this.entriesAlpha = entriesAlpha;
-        this.entriesBeta = entriesBeta;
         this.labels = labels;
     }
 
     protected Graph(Parcel in) {
         name_graph = in.readString();
         entriesAlpha = in.createTypedArrayList(Entry.CREATOR);
-        entriesBeta = in.createTypedArrayList(Entry.CREATOR);
         labels = in.createStringArrayList();
     }
 
@@ -59,14 +56,6 @@ public class Graph implements Parcelable {
         this.entriesAlpha = entriesAlpha;
     }
 
-    public ArrayList<Entry> getEntriesBeta() {
-        return entriesBeta;
-    }
-
-    public void setEntriesBeta(ArrayList<Entry> entriesBeta) {
-        this.entriesBeta = entriesBeta;
-    }
-
     public ArrayList<String> getLabels() {
         return labels;
     }
@@ -88,7 +77,6 @@ public class Graph implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name_graph);
         parcel.writeTypedList(entriesAlpha);
-        parcel.writeTypedList(entriesBeta);
         parcel.writeStringList(labels);
     }
 }

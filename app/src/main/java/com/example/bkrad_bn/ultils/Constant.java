@@ -2,7 +2,7 @@ package com.example.bkrad_bn.ultils;
 
 public class Constant {
     //public static final String URL = "http://192.168.1.144:6688/";
-    public static final String URL = "https://nhayen.sanslab.vn/";
+    public static final String URL = "https://rad.sanslab.vn/";
     public static final String TAG_LOGIN = "LOGIN ACTIVITY";
     public static final String TAG_MAIN = "MAIN ACTIVITY";
     public static final String TAG_URL_SERVICE = "URL";
@@ -15,9 +15,9 @@ public class Constant {
 //    public static final String API_GET_DATA_THONGKE = "ThongKe/GetValues?";
 
     //new API of BKRERS LORA
-    public static final String API_GET_TOKEN = "oauth/token";
-    public static final String API_GET_CURRENT_USER = "api/user/getcurrentuser/";
-    public static final String API_GET_ALL_DEVICE = "api/device/getall";
+    public static final String API_GET_TOKEN = "api/account/login";
+    public static final String API_GET_ALL_MARKER = "api/datapackage/getallmarker";
+    public static final String API_GET_DATAPACKAGE_REPORT = "api/datapackage/report";
     public static final String API_GET_NEWEST_PARAM = "api/datapackage/getparamnewest/";
     public static final String API_GET_DATA_PACKAGE = "api/datapackage/report?";
     public static final String API_GET_DATA_THONGKE = "ThongKe/GetValues?";
@@ -36,4 +36,7 @@ public class Constant {
 
     public static final String DETAIL_DEV = "DETAIL_DEV";
 
+    public static final String ACCESS_CODE = "ACCESS_CODE";
+    public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
+    public static String FIRST_TIME_USE_APP = "FIRST_TIME_USE_APP";
 }

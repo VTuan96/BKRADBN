@@ -7,8 +7,8 @@ public class Device implements Parcelable {
     public int Id;
     public String Name;
     public String Imei;
-    public float Alpha;
-    public float Beta;
+    public float Gamma;
+    public float Neutron;
     public float Lat;
     public float Lon;
 
@@ -20,8 +20,8 @@ public class Device implements Parcelable {
         Id = id;
         Name = name;
         Imei = imei;
-        Alpha = alpha;
-        Beta = beta;
+        Gamma = alpha;
+        Neutron = beta;
         Lat = lat;
         Lon = lon;
     }
@@ -30,8 +30,8 @@ public class Device implements Parcelable {
         Id = in.readInt();
         Name = in.readString();
         Imei = in.readString();
-        Alpha = in.readFloat();
-        Beta = in.readFloat();
+        Gamma = in.readFloat();
+        Neutron = in.readFloat();
         Lat = in.readFloat();
         Lon = in.readFloat();
     }
@@ -56,8 +56,8 @@ public class Device implements Parcelable {
                 "Id=" + Id +
                 ", Name='" + Name + '\'' +
                 ", Imei='" + Imei + '\'' +
-                ", Alpha='" + Alpha + '\'' +
-                ", Beta='" + Beta + '\'' +
+                ", Alpha='" + Gamma + '\'' +
+                ", Beta='" + Neutron + '\'' +
                 '}';
     }
 
@@ -87,8 +87,8 @@ public class Device implements Parcelable {
         parcel.writeInt(Id);
         parcel.writeString(Name);
         parcel.writeString(Imei);
-        parcel.writeFloat(Alpha);
-        parcel.writeFloat(Beta);
+        parcel.writeFloat(Gamma);
+        parcel.writeFloat(Neutron);
         parcel.writeFloat(Lat);
         parcel.writeFloat(Lon);
     }
@@ -117,20 +117,20 @@ public class Device implements Parcelable {
         Imei = imei;
     }
 
-    public float getAlpha() {
-        return Alpha;
+    public float getGamma() {
+        return Gamma;
     }
 
-    public void setAlpha(float alpha) {
-        Alpha = alpha;
+    public void setGamma(float gamma) {
+        Gamma = gamma;
     }
 
-    public float getBeta() {
-        return Beta;
+    public float getNeutron() {
+        return Neutron;
     }
 
-    public void setBeta(float beta) {
-        Beta = beta;
+    public void setNeutron(float neutron) {
+        Neutron = neutron;
     }
 
     public static Creator<Device> getCREATOR() {

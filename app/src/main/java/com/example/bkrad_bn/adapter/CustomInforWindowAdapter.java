@@ -35,8 +35,8 @@ public class CustomInforWindowAdapter implements GoogleMap.InfoWindowAdapter {
         TextView txtDeviceName = view.findViewById(R.id.txtDeviceName);
 
         Device dev = (Device) (marker.getTag());
-        txtAlpha.setText(dev.getAlpha() + " ");
-        txtBeta.setText(dev.getBeta() + " ");
+        txtAlpha.setText(dev.getGamma() + " ");
+        txtBeta.setText(dev.getNeutron() + " ");
         txtDeviceName.setText(dev.getName());
 
         return view;

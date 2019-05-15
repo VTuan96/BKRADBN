@@ -50,9 +50,17 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:id="@+id/ivSelectDevice"
-        android:src="@drawable/ic_add_device"
+        android:src="@drawable/ic_parameter_36dp"
         android:tint="@color/colorPrimary"
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/size15dp"/>
+    <!--<ImageView-->
+        <!--android:layout_width="36dp"-->
+        <!--android:layout_height="36dp"-->
+        <!--android:id="@+id/ivSelectParam"-->
+        <!--android:src="@drawable/ic_parameter_36dp"-->
+        <!--android:tint="@color/colorPrimary"-->
+        <!--android:layout_gravity="bottom|left"-->
+        <!--android:layout_margin="@dimen/size15dp"/>-->
 
 </FrameLayout>
