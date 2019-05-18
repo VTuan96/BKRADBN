@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.bkrad_bn.ConnectionActivity;
 import com.example.bkrad_bn.DetailDeviceActivity;
 import com.example.bkrad_bn.R;
-import com.example.bkrad_bn.UpdateUserActivity;
+import com.example.bkrad_bn.UserActivity;
 import com.example.bkrad_bn.helper.InforUserDialog;
 
 
@@ -61,19 +62,19 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         Intent intent = null;
         switch (id){
             case R.id.lnAccountInfor:
-                InforUserDialog inforUserDialog = new InforUserDialog(getContext());
-                inforUserDialog.show();
+                intent = new Intent(getContext(), UserActivity.class);
+                startActivity(intent);
                 break;
             case R.id.lnUpdateUser:
-                intent = new Intent(getContext(), DetailDeviceActivity.class);
+                intent = new Intent(getContext(), UserActivity.class);
                 startActivity(intent);
                 break;
             case R.id.lnDefaultConnect:
-                intent = new Intent(getContext(), DetailDeviceActivity.class);
+                intent = new Intent(getContext(), ConnectionActivity.class);
                 startActivity(intent);
                 break;
             case R.id.lnConnectConfig:
-                intent = new Intent(getContext(), DetailDeviceActivity.class);
+                intent = new Intent(getContext(), ConnectionActivity.class);
                 startActivity(intent);
                 break;
         }

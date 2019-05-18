@@ -9,40 +9,160 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="15sp"
-            android:text="..... - ......" />
 
-        <TextView
-            android:id="@+id/txt_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="15sp"
-            android:text="Ngày : ........"/>
-
-        <TextView
-            android:id="@+id/txtItemContent"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:drawableStart="@drawable/ic_cached_black_24dp"
-            android:drawableTint="@color/colorPrimary"
-            android:text="Lựa chọn thiết bị!!!" />
-
-        <android.support.v7.widget.RecyclerView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="25dp"
-            android:id="@+id/rvItemBieuDoThongKe"></android.support.v7.widget.RecyclerView>
+            android:orientation="vertical"
+            android:id="@+id/lnlSelectDevice"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/lnlParam"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/size15dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lựa chọn tham số"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/size18sp"
+                        android:layout_marginLeft="5dp"/>
+
+                    <ImageView
+                        android:id="@+id/ivExitParam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        android:src="@drawable/ic_delete_36dp"
+                        android:tint="@color/colorPrimary" />
+                </RelativeLayout>
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lvParam"></ListView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:id="@+id/lnlDevice"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lựa chọn thiết bị"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/size18sp"
+                        android:layout_marginLeft="5dp"/>
+
+                    <ImageView
+                        android:id="@+id/ivExitDevice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        android:src="@drawable/ic_delete_36dp"
+                        android:tint="@color/colorPrimary" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.SearchView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/svDevice"></android.support.v7.widget.SearchView>
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lvDevice"></ListView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/lnlHistory"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp"
+                    android:text="..... - ......" />
+
+                <TextView
+                    android:id="@+id/txt_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp"
+                    android:text="Ngày : ........"/>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/rvItemBieuDoThongKe"
+                    android:layout_centerInParent="true">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <!--<TextView-->
+                    <!--android:layout_marginTop="@dimen/size15dp"-->
+                    <!--android:layout_marginLeft="@dimen/size8dp"-->
+                    <!--android:id="@+id/txtTableHistory"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/colorPrimary"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textSize="18dp"-->
+                    <!--android:text="Bảng thống kê dữ liệu"-->
+                    <!--/>-->
+
+                <!--<com.evrencoskun.tableview.TableView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/tvHistory">-->
+
+                <!--</com.evrencoskun.tableview.TableView>-->
+            </LinearLayout>
+        <!--</ScrollView>-->
 
     </LinearLayout>
 
@@ -54,13 +174,5 @@
         android:tint="@color/colorPrimary"
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/size15dp"/>
-    <!--<ImageView-->
-        <!--android:layout_width="36dp"-->
-        <!--android:layout_height="36dp"-->
-        <!--android:id="@+id/ivSelectParam"-->
-        <!--android:src="@drawable/ic_parameter_36dp"-->
-        <!--android:tint="@color/colorPrimary"-->
-        <!--android:layout_gravity="bottom|left"-->
-        <!--android:layout_margin="@dimen/size15dp"/>-->
 
 </FrameLayout>

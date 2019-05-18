@@ -13,6 +13,8 @@
     <color name="colorSecond">#AE0AB3A1</color>
     <color name="colorGraph">#616161</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorMaterialGrey">#8e8e8e</color>
+    <color name="colorYellow">#FFEB3B</color>
 
     <!--<color name="colorPrimary">#919292</color>-->
     <!--<color name="colorPrimaryDark">#D2D5D4</color>-->

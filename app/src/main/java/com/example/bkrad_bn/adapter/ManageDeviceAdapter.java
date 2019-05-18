@@ -40,23 +40,23 @@ public class ManageDeviceAdapter extends ArrayAdapter<Device> {
         }
 
         TextView txtNameDev = convertView.findViewById(R.id.txtNameDev);
-        TextView txtImeiDev = convertView.findViewById(R.id.txtImeiDev);
-        TextView txtLatitudeDev = convertView.findViewById(R.id.txtLatitudeDev);
-        TextView txtLongitudeDev = convertView.findViewById(R.id.txtLongitudeDev);
+        TextView txtGammaDev = convertView.findViewById(R.id.txtGammaDev);
+        TextView txtNeutronDev = convertView.findViewById(R.id.txtNeutronDev);
+        TextView txtCreatedDateDev = convertView.findViewById(R.id.txtCreatedDateDev);
         CardView cvItemDev = convertView.findViewById(R.id.cvItemDev);
 
         final Device device = mList.get(position);
         txtNameDev.setText(device.getName());
-        txtImeiDev.setText("Imei: " + device.getImei());
-        txtLatitudeDev.setText("Latitude: " + device.getLat());
-        txtLongitudeDev.setText("Longitude: " + device.getLon());
+        txtGammaDev.setText("Gamma: " + device.getGamma());
+        txtNeutronDev.setText("Neutron: " + device.getNeutron());
+        txtCreatedDateDev.setText("Thời gian nhận bản tin: " + device.getCreateDate().substring(0,19).replace("T"," "));
 
         cvItemDev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DetailDeviceActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable(Constant.DETAIL_DEV, device);
+                bundle.putSerializable(Constant.DETAIL_DEV, device);
                 intent.putExtra(Constant.DETAIL_DEV, bundle);
                 mContext.startActivity(intent);
             }

@@ -11,6 +11,12 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="true"
+        android:dividerHeight="3dp"
+        android:divider="@color/colorWhite"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:id="@+id/lvManageDevice"></ListView>
 
 

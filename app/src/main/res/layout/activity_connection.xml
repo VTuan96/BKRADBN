@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ConnectionActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:title="Cấu hình server"
+            app:titleTextColor="@color/colorWhite"
+            android:id="@+id/toolbarConnection"
+            android:background="@color/colorSecondPrimary"></android.support.v7.widget.Toolbar>
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="@dimen/size5dp"
+            android:layout_marginRight="@dimen/size5dp"
+            android:layout_marginTop="@dimen/size8dp"
+            app:cardCornerRadius="@dimen/size5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Domain"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/size3dp"
+                        android:textColor="@color/colorSecondPrimary"/>
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_domain_36dp"
+                        android:layout_marginTop="@dimen/size5dp"
+                        android:scaleType="fitCenter"
+                        />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ivEditDomain"
+                        android:layout_marginRight="@dimen/size15dp"
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"
+                        android:background="@drawable/ic_edit_24dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/size30dp"
+                        android:clickable="false"
+                        android:layout_alignRight="@id/ivEditUsername">
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/etDomain"
+                            android:layout_centerInParent="true"
+                            android:enabled="false"
+                            android:inputType="phone"
+                            android:layout_weight="2"
+                            android:text="https://rad.sanslab.vn"
+                            android:hint="Enter domain"
+                            android:textColorHint="@color/colorSecondPrimary"
+                            android:textSize="@dimen/size15sp"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"/>
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="@dimen/size5dp"
+            android:layout_marginRight="@dimen/size5dp"
+            android:layout_marginTop="@dimen/size8dp"
+            app:cardCornerRadius="@dimen/size5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Port"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/size3dp"
+                        android:textColor="@color/colorSecondPrimary"/>
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_port_36dp"
+                        android:layout_marginTop="@dimen/size5dp"
+                        android:scaleType="fitCenter"
+                        />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ivEditPort"
+                        android:layout_marginRight="@dimen/size15dp"
+                        android:scaleY="0.8"
+                        android:scaleX="0.8"
+                        android:background="@drawable/ic_edit_24dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/size30dp"
+                        android:layout_alignRight="@id/ivEditFullName">
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:inputType="textPersonName"
+                            android:id="@+id/etPort"
+                            android:layout_weight="2"
+                            android:text=""
+                            android:hint="Enter port number"
+                            android:textColorHint="@color/colorSecondPrimary"
+                            android:enabled="false"
+                            android:textSize="@dimen/size15sp"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"/>
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size5dp"
+                android:layout_marginRight="@dimen/size5dp"
+                android:layout_marginTop="@dimen/size8dp"
+                app:cardCornerRadius="@dimen/size5dp"
+                android:layout_marginBottom="@dimen/size8dp"
+                android:layout_weight="1" >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bntSave"
+                        android:src="@drawable/ic_save_36dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/bntSave"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true"
+                        android:text="Save"/>
+
+                </RelativeLayout>
+
+
+
+
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size5dp"
+                android:layout_marginRight="@dimen/size5dp"
+                android:layout_marginTop="@dimen/size8dp"
+                android:layout_marginBottom="@dimen/size8dp"
+                app:cardCornerRadius="@dimen/size5dp"
+                android:layout_weight="1" >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bntRestore"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/ic_default_connection_36dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/bntRestore"
+                        android:gravity="center"
+                        android:layout_centerHorizontal="true"
+                        android:text="Restore defacult"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

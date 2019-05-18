@@ -20,15 +20,433 @@
 
     </FrameLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Chức năng đang phát triển!"
-            android:gravity="center"/>
-    </LinearLayout>
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trạng thái hiện tại"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/colorSecondPrimary"
+                android:layout_marginLeft="5dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="3dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Gamma"
+                            android:textSize="@dimen/size12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_gravity="center"
+                            android:background="@color/colorGrey"
+                            app:cardCornerRadius="96dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_gamma_72dp"
+                                android:scaleX="0.8"
+                                android:scaleY="0.8"
+                                android:scaleType="centerCrop"
+                                android:tint="@color/colorSecondPrimary"
+                                />
+                        </android.support.v7.widget.CardView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtGammaDev"
+                            android:text="26.06"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Neutron"
+                            android:textSize="@dimen/size12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_gravity="center"
+                            android:background="@color/colorGrey"
+                            app:cardCornerRadius="96dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:scaleX="0.9"
+                                android:scaleY="0.9"
+                                android:src="@drawable/ic_neutron_72dp"
+                                android:scaleType="centerCrop"
+                                />
+                        </android.support.v7.widget.CardView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtNeutronDev"
+                            android:text="78.9"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Vị trí hiện tại"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/size12sp"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_gravity="center"
+                            app:cardCornerRadius="96dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:scaleX="0.9"
+                                android:scaleY="0.9"
+                                android:src="@drawable/ic_gps_72dp"
+                                android:scaleType="centerCrop"
+                                />
+                        </android.support.v7.widget.CardView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtLocationDev"
+                            android:text="(20N33'333'', 102N39'22'')"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Thời gian cập nhật"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/size12sp"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_gravity="center"
+                            android:background="@color/colorGrey"
+                            app:cardCornerRadius="96dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:scaleX="0.9"
+                                android:scaleY="0.9"
+                                android:src="@drawable/ic_time_72dp"
+                                android:scaleType="centerCrop"
+                                />
+                        </android.support.v7.widget.CardView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtLastestTimeDev"
+                            android:text="17/05/2019 12:04:45"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thông tin"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/colorSecondPrimary"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="3dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tên thiết bị"
+                            android:textSize="@dimen/size12sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_gravity="center"
+                            android:background="@color/colorGrey"
+                            app:cardCornerRadius="96dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:scaleX="0.8"
+                                android:scaleY="0.8"
+                                android:src="@drawable/ic_radiation_72dp"
+                                android:scaleType="centerCrop"
+                                />
+                        </android.support.v7.widget.CardView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtNameDev"
+                            android:text="Hulk"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Cơ sở quản lý"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/size12sp"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_gravity="center"
+                            android:background="@color/colorGrey"
+                            app:cardCornerRadius="96dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_enterprise_72dp"
+                                android:scaleX="0.6"
+                                android:scaleY="0.6"
+                                android:scaleType="centerCrop"
+                                />
+                        </android.support.v7.widget.CardView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtNameEnterprise"
+                            android:text="Mavel"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Vị trí hiện tại"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/size12sp"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_gravity="center"
+                            app:cardCornerRadius="96dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:scaleX="0.7"
+                                android:scaleY="0.7"
+                                android:src="@drawable/ic_address_72dp"
+                                android:scaleType="centerCrop"
+                                />
+                        </android.support.v7.widget.CardView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtAddressEnterprise"
+                            android:gravity="center"
+                            android:text="Số 1, Đại Cồ Việt, Quận Hai Bà Trưng, Hà Nội"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Liên hệ quản lý"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/size12sp"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:clickable="true"
+                            android:id="@+id/cvPhoneEnterprise"
+                            android:layout_gravity="center"
+                            android:background="@color/colorGrey"
+                            app:cardCornerRadius="96dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/ivPhoneEnterprise"
+                                android:layout_gravity="center"
+                                android:scaleX="0.8"
+                                android:scaleY="0.8"
+
+                                android:background="@drawable/ic_phone_enterprise"
+                                android:scaleType="centerCrop"
+                                />
+                        </android.support.v7.widget.CardView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtPhoneEnterprise"
+                            android:text="0965765972"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorSecondPrimary"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>

@@ -6,4 +6,11 @@
     <dimen name="size15dp">15dp</dimen>
     <dimen name="size12dp">12dp</dimen>
     <dimen name="size8dp">8dp</dimen>
+    <dimen name="size10sp">10sp</dimen>
+    <dimen name="size12sp">12sp</dimen>
+    <dimen name="size18sp">18sp</dimen>
+    <dimen name="size5dp">5dp</dimen>
+    <dimen name="size3dp">3dp</dimen>
+    <dimen name="size15sp">15sp</dimen>
+    <dimen name="size30dp">30dp</dimen>
 </resources>

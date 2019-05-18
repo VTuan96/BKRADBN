@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.bkrad_bn.R;
-import com.example.bkrad_bn.UpdateUserActivity;
+import com.example.bkrad_bn.UserActivity;
 
 public class InforUserDialog extends Dialog implements View.OnClickListener {
 
@@ -40,7 +40,7 @@ public class InforUserDialog extends Dialog implements View.OnClickListener {
         } else if (id == R.id.btnUpdateUser){
             this.dismiss();
 
-            Intent intent = new Intent(getContext(), UpdateUserActivity.class);
+            Intent intent = new Intent(getContext(), UserActivity.class);
             getContext().startActivity(intent);
         }
     }

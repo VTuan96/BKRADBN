@@ -130,40 +130,25 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setHasOptionsMenu(true);
 
-        MainActivity.isWarningSound = true;
+        mContext = (MainActivity) getContext();
+        preferences = mContext.getSharedPreferences(Constant.IS_WARNING_SOUND, MODE_PRIVATE);
+        MainActivity.isWarningSound = preferences.getBoolean(Constant.IS_WARNING_SOUND, true);
+
         initWidgets(view);
 
-        mContext = (MainActivity) getContext();
         preferences = mContext.getSharedPreferences(Constant.FIRST_TIME_USE_APP, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(Constant.FIRST_TIME_USE_APP, IS_FIRST_TIME_USE_APP);
         editor.commit();
 
         preferences = mContext.getSharedPreferences(Constant.ACCESS_CODE, MODE_PRIVATE);
-        String token = preferences.getString(Constant.ACCESS_TOKEN, null);
+        String token = preferences.getString(Constant.ACCESS_TOKEN, "");
 
         queue = Volley.newRequestQueue(mContext);
 
+        releaseMediaPlayer(MainActivity.mediaPlayer);
 
-        if (!token.equals(null)){
-//            HubConnection hubConnection = new HubConnection(Constant.URL, false);
-//            hubConnection.setGroupsToken(token);
-//            HubProxy hubProxy = hubConnection.createHubProxy("/radHub");
-//            hubConnection.connected(new Runnable() {
-//                @Override
-//                public void run() {
-//                    System.out.println("Message: " + "connected");
-//                }
-//            });
-//            hubConnection.start(new ServerSentEventsTransport(hubConnection.getLogger()));
-//
-//            hubProxy.on("ReceivePayload", new SubscriptionHandler1<String>() {
-//                @Override
-//                public void run(String s) {
-//                    System.out.println("Message------------------>: " );
-//                }
-//            }, String.class);
-
+        if (!token.equals("")){
             HubConnection hubConnection = HubConnectionBuilder.create(Constant.URL + "radHub")
                     .withAccessTokenProvider(Single.defer(() -> {
                         // Your logic here.
@@ -176,25 +161,29 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                     System.out.println("New Message: " + "Connected");
 //                    Exception exception =
 
+
                 }
             });
 
             hubConnection.on("ReceivePayload", (message) -> {
-                try {
-                    Gson gson = new Gson();
-                    String json = gson.toJson(message);
-                    JSONObject jsonObject = new JSONObject(json);
-                    System.out.print(jsonObject.getString("Datetime_Packet"));
+//                try {
+//                    Gson gson = new Gson();
+//                    String json = gson.toJson(message);
+//                    JSONObject jsonObject = new JSONObject(json);
+//                    System.out.print(jsonObject.getString("Datetime_Packet"));
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                clearMap();
+//                releaseMediaPlayer(MainActivity.mediaPlayer);
+//                getListDevices();
+
             },Object.class);
-
+        } else {
+            System.out.println("error");
         }
-
-
-
 
         return view;
     }
@@ -208,15 +197,18 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
         for (int i = 0; i < listDevices.size(); i++) {
             Device dev = listDevices.get(i);
             Marker marker = map.addMarker(new MarkerOptions()
-                    .icon(outOfRangeValue(dev.getGamma(), dev.getNeutron()) ? BitmapDescriptorFactory.fromResource(R.drawable.pxdo) : BitmapDescriptorFactory.fromResource(R.drawable.pxxanh))
+                    .icon(dev.isWarning() ? BitmapDescriptorFactory.fromResource(R.drawable.pxdo) : BitmapDescriptorFactory.fromResource(R.drawable.pxxanh))
                     .position(new LatLng(dev.getLat(), dev.getLon()))
                     .title(dev.getName())
                     .snippet("Radiation detection"));
             marker.setTag(dev);
-//            marker.showInfoWindow();
+            marker.showInfoWindow();
 
-            if (outOfRangeValue(dev.getGamma(), dev.getNeutron()) && !FIRST_WARNING && MainActivity.isWarningSound){
+            if (dev.isWarning() && !FIRST_WARNING && MainActivity.isWarningSound){
                 FIRST_WARNING = true;
+
+                releaseMediaPlayer(MainActivity.mediaPlayer);
+
                 MainActivity.mediaPlayer = MediaPlayer.create(mContext, R.raw.warning_sound);
                 MainActivity.mediaPlayer.start(); // no need to call prepare(); create() does that for you
                 MainActivity.mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -225,24 +217,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                     };
                 });
             }
-
+            boolean test = listDevices.get(i).equals(favoriteDev);
+            System.out.println(test);
             if (listDevices.get(i).equals(favoriteDev) && favoriteDev != null) {
                 latLng0 = new LatLng(favoriteDev.getLat(), favoriteDev.getLon());
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng0, 10));
+//                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng0, 10));
                 marker.showInfoWindow();
             }
-
         }
-
-
-
-    }
-
-    private boolean outOfRangeValue(float alpha, float beta){
-        if ((alpha > MAX_ALPHA_THRESHOLD) || (beta > MAX_BETA_THRESHOLD)){
-            return true;
-        }
-        return false;
     }
 
     private void initWidgets(View view) {
@@ -254,7 +236,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
         cvSound.setOnClickListener(this);
         ivWarningSound.setImageDrawable(MainActivity.isWarningSound ? getResources().getDrawable(R.drawable.ic_volume_on) :
-                getResources().getDrawable(R.drawable.ic_volume_off) );
+                getResources().getDrawable(R.drawable.ic_volume_off));
     }
 
 
@@ -291,6 +273,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                         device.setLon((float) secRoot.getDouble("Longitude"));
                         device.setName(thirdRoot.getString("Name"));
                         device.setImei(thirdRoot.getString("Imei"));
+                        device.setWarning(secRoot.getBoolean("IsWarning"));
+                        device.setCreateDate(secRoot.getString("CreatedDate"));
 
                         listDevices.add(device);
                     }
@@ -320,15 +304,18 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
 
-
 //                AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-//                builder1.setMessage("Lỗi khi đăng nhập. Vui Lòng Thử lại");
-//                builder1.setTitle("Lỗi mạng");
+//                builder1.setMessage("Vui lòng đăng nhập !!!");
+//                builder1.setTitle("Lỗi chưa đăng nhập");
 //                builder1.setPositiveButton(
 //                        "OK",
 //                        new DialogInterface.OnClickListener() {
 //                            public void onClick(DialogInterface dialog, int id) {
 //                                dialog.cancel();
+//                                getActivity().finish();
+//
+//                                Intent intent = new Intent(mContext, LoginActivity.class);
+//                                startActivity(intent);
 //                            }
 //                        });
 //
@@ -352,6 +339,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                 if (statusCode==400) //unauthorized
                 {
                     onResume();
+                } else if (statusCode == 401){
+
                 }
                 return super.parseNetworkResponse(response);
             }
@@ -394,6 +383,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
 //        map.animateCamera(CameraUpdateFactory.zoomTo(13));
         map.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 500, null);
+
     }
 
     public synchronized void buildGoogoleApiClient() {
@@ -423,13 +413,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
                             buildGoogoleApiClient();
                         }
 //                        map.setMyLocationEnabled(true);
+
                         onResume();
                     }
                 }
 
                 @Override
                 public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-                    Toast.makeText(mContext, "Denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -500,7 +491,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
         releaseMediaPlayer(MainActivity.mediaPlayer);
 
-
         random = new Random();
         getListDevices();
 
@@ -551,6 +541,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
     @Override
     public void onResume() {
         super.onResume();
+
+        getListDevices();
 
 //        if (preferences != null)
 //            TIME_TO_UPDATE = Double.parseDouble(preferences.getString(CommonDefine.TIME_UPDATE_LOCATION, "10")) * 1000;
@@ -612,6 +604,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Google
 
             ivWarningSound.setImageDrawable(MainActivity.isWarningSound ? getResources().getDrawable(R.drawable.ic_volume_on) :
                     getResources().getDrawable(R.drawable.ic_volume_off) );
+
+            preferences = mContext.getSharedPreferences(Constant.IS_WARNING_SOUND, MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(Constant.IS_WARNING_SOUND, MainActivity.isWarningSound);
+            editor.commit();
         }
     }
 }

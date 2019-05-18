@@ -12,6 +12,7 @@ import com.example.bkrad_bn.R;
 import com.example.bkrad_bn.model.Graph;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
@@ -88,6 +89,7 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
             leftYAxis.setTextColor(Color.WHITE);
             rightYAxis.setTextColor(Color.WHITE);
 
+
             holder.graph.setData(new LineData(lineDataSets));
             holder.graph.setDrawGridBackground(false);
             holder.graph.getAxisRight().setDrawGridLines(false);
@@ -97,6 +99,11 @@ public class GraphAdapter extends RecyclerView.Adapter<GraphAdapter.ViewHolder> 
             holder.graph.invalidate();
             holder.graph.setBackgroundColor(context.getResources().getColor(R.color.colorSecondPrimary));
             holder.graph.setContentDescription("");
+
+            Description description = new Description();
+            description.setText("");
+            holder.graph.setDescription(description);
+
         }
 
     }

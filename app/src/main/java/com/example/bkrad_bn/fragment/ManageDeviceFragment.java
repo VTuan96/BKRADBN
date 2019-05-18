@@ -74,12 +74,10 @@ public class ManageDeviceFragment extends Fragment {
 
         lvManageDevice = view.findViewById(R.id.lvManageDevice);
 
-        mContext = getContext();
+        mContext = (MainActivity)getActivity();
         queue = Volley.newRequestQueue(getContext());
 
         listDevice = new ArrayList<>();
-        getListDevices();
-
 
         return view;
     }
@@ -105,11 +103,12 @@ public class ManageDeviceFragment extends Fragment {
                         device.setLon((float) secRoot.getDouble("Longitude"));
                         device.setName(thirdRoot.getString("Name"));
                         device.setImei(thirdRoot.getString("Imei"));
+                        device.setCreateDate(secRoot.getString("CreatedDate"));
 
                         listDevice.add(device);
                     }
 
-                    manageDeviceAdapter = new ManageDeviceAdapter(getContext(), listDevice);
+                    manageDeviceAdapter = new ManageDeviceAdapter(mContext, listDevice);
                     lvManageDevice.setAdapter(manageDeviceAdapter);
 
 
@@ -163,4 +162,9 @@ public class ManageDeviceFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getListDevices();
+    }
 }

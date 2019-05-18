@@ -3,7 +3,9 @@ package com.example.bkrad_bn.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Device implements Parcelable {
+import java.io.Serializable;
+
+public class Device implements Serializable {
     public int Id;
     public String Name;
     public String Imei;
@@ -11,12 +13,15 @@ public class Device implements Parcelable {
     public float Neutron;
     public float Lat;
     public float Lon;
+    public boolean isWarning;
+    public String CreateDate;
+
 
     public Device() {
         this.Id = 0;
     }
 
-    public Device(int id, String name, String imei, float alpha, float beta, float lat, float lon) {
+    public Device(int id, String name, String imei, float alpha, float beta, float lat, float lon, boolean isWarning, String createDate) {
         Id = id;
         Name = name;
         Imei = imei;
@@ -24,6 +29,8 @@ public class Device implements Parcelable {
         Neutron = beta;
         Lat = lat;
         Lon = lon;
+        this.isWarning = isWarning;
+        CreateDate = createDate;
     }
 
     protected Device(Parcel in) {
@@ -37,17 +44,17 @@ public class Device implements Parcelable {
     }
 
 
-    public static final Creator<Device> CREATOR = new Creator<Device>() {
-        @Override
-        public Device createFromParcel(Parcel in) {
-            return new Device(in);
-        }
-
-        @Override
-        public Device[] newArray(int size) {
-            return new Device[size];
-        }
-    };
+//    public static final Creator<Device> CREATOR = new Creator<Device>() {
+//        @Override
+//        public Device createFromParcel(Parcel in) {
+//            return new Device(in);
+//        }
+//
+//        @Override
+//        public Device[] newArray(int size) {
+//            return new Device[size];
+//        }
+//    };
 
 
     @Override
@@ -61,9 +68,25 @@ public class Device implements Parcelable {
                 '}';
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+
+    public String getCreateDate() {
+        return CreateDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        CreateDate = createDate;
+    }
+
+    public boolean isWarning() {
+        return isWarning;
+    }
+
+    public void setWarning(boolean warning) {
+        isWarning = warning;
     }
 
     public float getLat() {
@@ -82,16 +105,16 @@ public class Device implements Parcelable {
         Lon = lon;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(Id);
-        parcel.writeString(Name);
-        parcel.writeString(Imei);
-        parcel.writeFloat(Gamma);
-        parcel.writeFloat(Neutron);
-        parcel.writeFloat(Lat);
-        parcel.writeFloat(Lon);
-    }
+//    @Override
+//    public void writeToParcel(Parcel parcel, int i) {
+//        parcel.writeInt(Id);
+//        parcel.writeString(Name);
+//        parcel.writeString(Imei);
+//        parcel.writeFloat(Gamma);
+//        parcel.writeFloat(Neutron);
+//        parcel.writeFloat(Lat);
+//        parcel.writeFloat(Lon);
+//    }
 
     public int getId() {
         return Id;
@@ -133,13 +156,13 @@ public class Device implements Parcelable {
         Neutron = neutron;
     }
 
-    public static Creator<Device> getCREATOR() {
-        return CREATOR;
-    }
+//    public static Creator<Device> getCREATOR() {
+//        return CREATOR;
+//    }
 
     @Override
     public boolean equals(Object obj) {
         Device dev = (Device) obj;
-        return (this.Id == dev.getId()) && (this.Imei == dev.getImei());
+        return ((this.Id == dev.getId()) && this.Imei.equals(dev.getImei()));
     }
 }

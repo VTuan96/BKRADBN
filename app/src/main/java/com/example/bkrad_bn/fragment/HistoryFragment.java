@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,9 +102,8 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     public String tmpSelectedDeviceId="";
 
     private Calendar calendar;
-    private int year, month, day;
     ProgressDialog pDialog;
-    String selectedDateTime = "";
+    String selectedDateTime = "", formatDateTime = "";
 
     //All components of all graphs
     private ArrayList<Entry> entriesAlpha=new ArrayList<>();
@@ -111,7 +113,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     private ArrayList labelsBeta = new ArrayList<String>();
 
     //All label of graph
-    private String[] arrLabels=new String[]{"Alpha","Beta" };
+    private String[] arrLabels=new String[]{"Gamma","Neutron" };
 
     Random random = new Random();
 
@@ -123,6 +125,12 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     View viewParam = null, viewDev = null;
 
     String selectedParam = "";
+
+    SearchView svDevice;
+
+    LinearLayout lnlSelectDevice, lnlHistory, lnlDevice, lnlParam;
+
+    ImageView ivExitParam, ivExitDevice;
 
 
     @Override
@@ -137,10 +145,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
 
         queue = Volley.newRequestQueue(mContext);
 
-        calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
         tmpNgayThangNam = XuLyThoiGian.layNgayHienTai();
 
         String title= MainActivity.selectedDevice;
@@ -157,10 +161,21 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
 
         initGraph();
 
+        getListDevices();
+
+        lnlSelectDevice.setVisibility(View.VISIBLE);
+        lnlHistory.setVisibility(View.GONE);
+
+        selectDevAndParam();
+
+
+
+
         MainActivity.setOnDateChangedListener(new MainActivity.DateChanged() {
             @Override
-            public void onDateChanged(String selectedDate) {
+            public void onDateChanged(String selectedDate, String formatDate) {
                 selectedDateTime = selectedDate;
+                formatDateTime = formatDate;
                 System.out.println("selectedDevice =====> " + selectedDateTime);
 
                 if (selectedDevice.getId() == 0) {
@@ -172,6 +187,44 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         });
 
         return v;
+    }
+
+    private void selectDevAndParam() {
+        listParam = new ArrayList<>();
+        listParam.add("Gamma");
+        listParam.add("Neutron");
+
+        adapterParam = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, listParam);
+        lvParam.setAdapter(adapterParam);
+
+        lvParam.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                lnlParam.setVisibility(View.GONE);
+                lnlDevice.setVisibility(View.VISIBLE);
+
+                selectedParam = listParam.get(position);
+
+                adapterDevice = new DeviceAdapter(mContext, R.layout.layout_custom_item_select_device, listDevices);
+                lvDevice.setAdapter(adapterDevice);
+                adapterDevice.notifyDataSetChanged();
+
+                lvDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        selectedDevice = listDevices.get(position);
+                        createDeviceGraph(selectedDevice, selectedParam);
+
+                        lnlDevice.setVisibility(View.GONE);
+                        lnlParam.setVisibility(View.VISIBLE);
+                        lnlSelectDevice.setVisibility(View.GONE);
+                        lnlHistory.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        });
+
+
     }
 
     private void updateErrorInfor() {
@@ -187,31 +240,32 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initWidgets(View v){
-        txtItemContent= (TextView) v.findViewById(R.id.txtItemContent);
         txtTitle= (TextView) v.findViewById(R.id.txtTitle);
         rvItemBieuDoThongKe=  v.findViewById(R.id.rvItemBieuDoThongKe);
         txt_Time = (TextView) v.findViewById(R.id.txt_time);
         ivSelectDevice = v.findViewById(R.id.ivSelectDevice);
-//        ivSelectParam = v.findViewById(R.id.ivSelectParam);
+        ivExitParam = v.findViewById(R.id.ivExitParam);
+        ivExitDevice = v.findViewById(R.id.ivExitDevice);
+
+        lvParam = v.findViewById(R.id.lvParam);
+        lvDevice = v.findViewById(R.id.lvDevice);
+
+        lnlHistory = v.findViewById(R.id.lnlHistory);
+        lnlSelectDevice = v.findViewById(R.id.lnlSelectDevice);
+        lnlDevice = v.findViewById(R.id.lnlDevice);
+        lnlParam = v.findViewById(R.id.lnlParam);
 
         ivSelectDevice.setOnClickListener(this);
-//        ivSelectParam.setOnClickListener(this);
+        ivExitParam.setOnClickListener(this);
+        ivExitDevice.setOnClickListener(this);
 
-//        LayoutInflater inflater = getActivity().getLayoutInflater();
-//        viewDev = inflater.inflate(R.layout.layout_dialog_select_device, (ViewGroup) v, false);
-//        viewParam = inflater.inflate(R.layout.layout_dialog_select_param, (ViewGroup) v, false);
-
-//        lvDevice = viewDev.findViewById(R.id.lvDevice);
-//        lvParam = viewParam.findViewById(R.id.lvParam);
+        listDevices = new ArrayList<>();
 
     }
 
     public void initGraph(){
         entriesAlpha=new ArrayList<>();
         labelsAlpha = new ArrayList<String>();
-
-        entriesBeta=new ArrayList<>();
-        labelsBeta = new ArrayList<String>();
 
         listGraph=new ArrayList<>();
         Graph graph=new Graph(arrLabels[0],entriesAlpha,labelsAlpha);
@@ -233,8 +287,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_home, menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-
     }
 
 
@@ -243,91 +295,46 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         int id = v.getId();
         switch (id) {
             case R.id.ivSelectDevice:
-                getListDevices();
-                openSelectDevDialog();
+//                getListDevices();
+//                openSelectDevDialog();
+                lnlSelectDevice.setVisibility(View.VISIBLE);
+                lnlHistory.setVisibility(View.GONE);
+                selectDevAndParam();
+
                 break;
-//            case R.id.ivSelectParam:
-//                openSelectParamDialog();
-//                break;
-        }
-    }
+            case R.id.ivExitParam:
+                lnlParam.setVisibility(View.GONE);
+                lnlDevice.setVisibility(View.VISIBLE);
 
-    private void openSelectParamDialog() {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View viewParam = inflater.inflate(R.layout.layout_dialog_select_param, null, false);
-        lvParam = viewParam.findViewById(R.id.lvParam);
+                adapterDevice = new DeviceAdapter(mContext, R.layout.layout_custom_item_select_device, listDevices);
+                lvDevice.setAdapter(adapterDevice);
+                adapterDevice.notifyDataSetChanged();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                lvDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        selectedDevice = listDevices.get(position);
+                        createDeviceGraph(selectedDevice, selectedParam);
 
-        listParam = new ArrayList<>();
-        listParam.add("Gamma");
-        listParam.add("Neutron");
-
-        adapterParam = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, listParam);
-        lvParam.setAdapter(adapterParam);
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(viewParam)
-                .setTitle("Lựa chọn tham số")
-                // Add action buttons
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                        lnlDevice.setVisibility(View.GONE);
+                        lnlParam.setVisibility(View.VISIBLE);
+                        lnlSelectDevice.setVisibility(View.GONE);
+                        lnlHistory.setVisibility(View.VISIBLE);
                     }
                 });
 
-        AlertDialog dialogParam = builder.create();
-        dialogParam.show();
+                break;
 
-
-        lvParam.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedParam = listParam.get(position);
+            case R.id.ivExitDevice:
                 createDeviceGraph(selectedDevice, selectedParam);
-                txtItemContent.setVisibility(View.GONE);
-                dialogParam.dismiss();
-            }
-        });
-    }
 
-    private void openSelectDevDialog() {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View viewDev = inflater.inflate(R.layout.layout_dialog_select_device, null, false);
-        lvDevice = viewDev.findViewById(R.id.lvDevice);
+                lnlDevice.setVisibility(View.GONE);
+                lnlParam.setVisibility(View.VISIBLE);
+                lnlSelectDevice.setVisibility(View.GONE);
+                lnlHistory.setVisibility(View.VISIBLE);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
-
-        setupListViewDevice();
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(viewDev)
-                .setTitle("Lựa chọn thiết bị")
-                // Add action buttons
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog dialogDev = builder.create();
-        dialogDev.show();
-
-//        AlertDialog finalDialogDev = dialogDev;
-        lvDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedDevice = listDevices.get(position);
-//                createDeviceGraph(listDevices.get(position), selectedParam);
-//                txtItemContent.setVisibility(View.GONE);
-                dialogDev.dismiss();
-
-                openSelectParamDialog();
-            }
-        });
+                break;
+        }
     }
 
     private void createDeviceGraph(Device device, String param) {
@@ -336,7 +343,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         else {
             String nameGraph = param;
             ArrayList<Entry> entriesAlpha = new ArrayList<>();
-            ArrayList<Entry> entriesBeta = new ArrayList<>();
             ArrayList labels = new ArrayList<String>();
 
             String url = Constant.URL + Constant.API_GET_DATAPACKAGE_REPORT;
@@ -356,18 +362,23 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
                     Log.i("HISTORY_ACTIVITY", response);
                     try {
                         JSONArray root = new JSONArray(response);
-                        for (int i = 0 ; i < root.length() ; i++) {
-                            JSONObject secRoot = root.getJSONObject(i);
-                            String time = secRoot.getString("Time");
-                            time = time.split("T")[1];
-                            double value = secRoot.getDouble("Value");
-                            entriesAlpha.add(new Entry(i,(float)value));
-                            labels.add(time);
+                        if (root.length() > 0) {
+                            for (int i = 0; i < root.length(); i++) {
+                                JSONObject secRoot = root.getJSONObject(i);
+                                String time = secRoot.getString("Time");
+                                time = time.split("T")[1];
+                                double value = secRoot.getDouble("Value");
+                                entriesAlpha.add(new Entry(i, (float) value));
+                                labels.add(time);
+                            }
+
+                            Graph graph = new Graph(nameGraph, entriesAlpha, labels);
+                            listGraph.set(0, graph);
+
+                        } else {
+                            initGraph();
                         }
 
-                        Graph graph=new Graph(nameGraph, entriesAlpha, labels);
-
-                        listGraph.set(0, graph);
                         adapter.notifyDataSetChanged();
 
                         updateInfor(device);
@@ -416,12 +427,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
         txt_Time.setText("Ngày: " + selectedDateTime);
     }
 
-
-    private void setupListViewDevice() {
-        getListDevices();
-    }
-
-
     private void getListDevices() {
         String url = Constant.URL + Constant.API_GET_ALL_MARKER;
         final StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -443,15 +448,10 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
                         device.setLon((float) secRoot.getDouble("Longitude"));
                         device.setName(thirdRoot.getString("Name"));
                         device.setImei(thirdRoot.getString("Imei"));
+                        device.setWarning(secRoot.getBoolean("IsWarning"));
 
                         listDevices.add(device);
                     }
-
-                    adapterDevice = new DeviceAdapter(mContext, R.layout.layout_custom_item_select_device, listDevices);
-                    lvDevice.setAdapter(adapterDevice);
-                    lvDevice.setAdapter(adapterDevice);
-                    adapterDevice.notifyDataSetChanged();
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -462,19 +462,19 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
 
-//                AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
-//                builder1.setMessage("Lỗi khi đăng nhập. Vui Lòng Thử lại");
-//                builder1.setTitle("Lỗi mạng");
-//                builder1.setPositiveButton(
-//                        "OK",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                dialog.cancel();
-//                            }
-//                        });
-//
-//                AlertDialog alert11 = builder1.create();
-//                alert11.show();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+                builder1.setMessage("Error!");
+                builder1.setTitle("Lỗi mạng");
+                builder1.setPositiveButton(
+                        "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         }){
             @Override

@@ -2,15 +2,18 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width = "match_parent"
-    android:layout_height = "wrap_content"
+    android:layout_height = "100dp"
+    android:id="@+id/cvItemDev"
     android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
     android:orientation="vertical"
-    app:cardCornerRadius = "5dp"
-    android:id="@+id/cvItemDev">
+    app:cardCornerRadius = "5dp">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:orientation="horizontal"
         android:layout_margin="5dp">
         <ImageView
@@ -28,70 +31,36 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:text="..."
-                android:textSize="18sp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:id="@+id/txtNameDev"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtImeiDev"
+                android:id="@+id/txtGammaDev"
                 android:layout_marginTop="2dp"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorSecondPrimary"
                 android:text="Imei: ..."
-                android:textSize="15sp"
+                android:textSize="@dimen/size12sp"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtLatitudeDev"
-                android:textColor="@color/colorBlack"
+                android:id="@+id/txtNeutronDev"
+                android:textColor="@color/colorSecondPrimary"
                 android:text="Latitude: ..."
-                android:textSize="15sp"
+                android:textSize="@dimen/size12sp"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtLongitudeDev"
-                android:textColor="@color/colorBlack"
+                android:id="@+id/txtCreatedDateDev"
+                android:textColor="@color/colorSecondPrimary"
                 android:text="Longitude: ..."
-                android:textSize="15sp"
+                android:textSize="@dimen/size12sp"
                 />
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:orientation="horizontal">-->
-                <!--<Button-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:background="@color/colorSecondPrimary"-->
-                    <!--android:drawableStart="@drawable/ic_person_outline_white_18dp"-->
-                    <!--android:text="Kích hoạt"-->
-                    <!--android:textColor="@color/colorWhite"-->
-                    <!--android:textAllCaps="false"-->
-                    <!--/>-->
-
-                <!--<Button-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_marginLeft="@dimen/size15dp"-->
-                    <!--android:background="@color/colorSecondPrimary"-->
-                    <!--android:text="Kích hoạt"-->
-                    <!--android:drawableStart="@drawable/ic_person_outline_white_18dp"-->
-                    <!--android:textColor="@color/colorWhite"-->
-                    <!--android:textAllCaps="false"-->
-                    <!--/>-->
-
-                <!--<Button-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="36dp"-->
-                    <!--android:layout_marginLeft="@dimen/size15dp"-->
-                    <!--android:background="@color/colorSecondPrimary"-->
-                    <!--android:text="Kích hoạt"-->
-                    <!--android:drawableStart="@drawable/ic_person_outline_white_18dp"-->
-                    <!--android:textColor="@color/colorWhite"-->
-                    <!--android:textAllCaps="false"-->
-                    <!--/>-->
-            <!--</LinearLayout>-->
 
         </LinearLayout>
     </LinearLayout>
+
 </android.support.v7.widget.CardView>

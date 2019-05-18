@@ -11,17 +11,9 @@
         android:scrollbars="horizontal"
         android:orientation="vertical">
 
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:layout_width="match_parent"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="20dp"
-            android:layout_height="240dip"
-            android:id="@+id/graph" />
-
         <TextView
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/size15dp"
+            android:layout_marginTop="@dimen/size5dp"
+            android:layout_marginLeft="@dimen/size8dp"
             android:id="@+id/txt_TenBieuDo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,6 +21,13 @@
             android:textStyle="bold"
             android:textSize="18dp"
             android:text=""/>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_width="match_parent"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="20dp"
+            android:layout_height="240dip"
+            android:id="@+id/graph" />
 
 
     </LinearLayout>
