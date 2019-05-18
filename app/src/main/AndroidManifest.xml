@@ -25,6 +25,9 @@
         <activity android:name=".ConnectionActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
 
+        <activity android:name=".UserActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+
         <activity
             android:name=".DetailDeviceActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
